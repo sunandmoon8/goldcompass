@@ -80,6 +80,9 @@ h1{
   color:rgba(60,34,0,0.85);
   line-height:1.75;
   margin-top:.6rem;
+  text-align:center;
+  font-weight:300;
+  font-family:Georgia,'Hiragino Mincho ProN','Yu Mincho',serif;
 }
 .danger-badge{
   display:inline-flex;align-items:center;gap:4px;
@@ -290,7 +293,7 @@ h1{
     <div id="danger-area"></div>
   </div>
 
-    <p class="card-title" style="margin-top:1rem;">今日のミッション</p>
+    <p class="card-title" style="margin-top:1rem;font-size:17px;font-weight:300;letter-spacing:.02em;font-family:'Hiragino Kaku Gothic ProN','Hiragino Sans',sans-serif;">今日のミッション</p>
     <div class="task-input-row">
       <input type="text" class="task-input" id="task-input" placeholder="" onkeydown="if(event.key==='Enter')addTask()"/>
       <button class="add-btn" onclick="addTask()">＋</button>
