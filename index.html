@@ -262,6 +262,113 @@ h1{
 .hist-mood{font-size:12px;color:rgba(80,50,10,0.7);margin-top:4px;}
 .empty-hist{text-align:center;font-size:13px;color:rgba(130,90,10,0.45);padding:1.5rem 0;}
 #moon-svg{display:block;}
+/* カレンダー */
+.calendar{
+  background:rgba(255,250,225,0.62);
+  border:1px solid rgba(200,160,40,0.3);
+  border-radius:14px;
+  padding:1.1rem;
+  margin-bottom:.9rem;
+}
+.cal-header{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:.75rem;
+}
+.cal-title{
+  font-size:14px;
+  color:#3a2200;
+  font-family:Georgia,'Hiragino Mincho ProN','Yu Mincho',serif;
+  letter-spacing:.08em;
+}
+.cal-nav{
+  background:transparent;
+  border:none;
+  color:rgba(100,65,10,0.7);
+  font-size:18px;
+  cursor:pointer;
+  padding:2px 8px;
+  -webkit-tap-highlight-color:transparent;
+}
+.cal-grid{
+  display:grid;
+  grid-template-columns:repeat(7,1fr);
+  gap:4px;
+}
+.cal-dow{
+  text-align:center;
+  font-size:10px;
+  color:rgba(130,90,10,0.6);
+  padding:2px 0;
+}
+.cal-day{
+  text-align:center;
+  font-size:13px;
+  color:rgba(60,34,0,0.75);
+  padding:6px 2px;
+  border-radius:50%;
+  cursor:pointer;
+  position:relative;
+  -webkit-tap-highlight-color:transparent;
+  min-height:32px;
+  display:flex;align-items:center;justify-content:center;
+}
+.cal-day.empty{cursor:default;}
+.cal-day.today{
+  background:rgba(200,150,20,0.25);
+  color:#3a2200;
+  font-weight:500;
+}
+.cal-day.has-record{
+  background:rgba(200,150,20,0.35);
+  color:#3a2200;
+  font-weight:500;
+  box-shadow:0 0 0 1.5px rgba(180,130,10,0.5);
+}
+.cal-day.has-record:hover{
+  background:rgba(200,150,20,0.55);
+}
+
+/* 過去カード（ポップアップ風） */
+.past-card{
+  background:rgba(255,250,225,0.88);
+  border:1px solid rgba(200,160,40,0.4);
+  border-radius:14px;
+  padding:1.1rem;
+  margin-bottom:.9rem;
+  display:none;
+}
+.past-card.show{display:block;}
+.past-card-date{
+  font-size:12px;
+  color:rgba(130,90,10,0.7);
+  margin-bottom:.5rem;
+  font-family:Georgia,'Hiragino Mincho ProN',serif;
+}
+.past-card-moon{
+  font-size:13px;
+  color:rgba(100,65,10,0.8);
+  margin-bottom:.6rem;
+  text-align:center;
+}
+.past-card-close{
+  float:right;
+  background:transparent;
+  border:none;
+  color:rgba(130,90,10,0.5);
+  font-size:18px;
+  cursor:pointer;
+  margin-top:-4px;
+}
+.past-task{
+  font-size:13px;
+  color:rgba(60,34,0,0.8);
+  line-height:1.7;
+}
+.past-task.done{
+  text-decoration:line-through;
+  color:rgba(100,70,10,0.45);
+}
+
 .moon-bg-wrap{
   display:flex;justify-content:center;
   margin:-1.1rem -1.1rem .25rem;
@@ -301,14 +408,24 @@ h1{
     <div class="task-list" id="task-list"></div>
   </div>
 
-  <button class="btn-sub" onclick="toggleHist()" id="hbtn" style="font-size:20px;padding:10px;">🕐</button>
+  <!-- 過去カード -->
+  <div class="past-card" id="past-card">
+    <button class="past-card-close" onclick="closePastCard()">×</button>
+    <p class="past-card-date" id="past-card-date"></p>
+    <p class="past-card-moon" id="past-card-moon"></p>
+    <div id="past-card-tasks"></div>
+  </div>
 
-  <div id="hist" style="display:none;">
-    <div class="view-tabs">
-      <button class="view-tab active" onclick="setView('week',this)">週</button>
-      <button class="view-tab" onclick="setView('month',this)">月</button>
-      <button class="view-tab" onclick="setView('all',this)">全て</button>
+  <!-- カレンダー -->
+  <div class="calendar">
+    <div class="cal-header">
+      <button class="cal-nav" onclick="calPrev()">‹</button>
+      <p class="cal-title" id="cal-title"></p>
+      <button class="cal-nav" onclick="calNext()">›</button>
     </div>
+    <div class="cal-grid" id="cal-grid"></div>
+  </div>
+
     <div id="hl"></div>
   </div>
 
@@ -336,7 +453,6 @@ const SG=[
 const PH=['新月','三日月','上弦','十三夜','満月','十六夜','下弦','有明月'];
 const DANGER=['新月','満月'];
 let todayMoon={};
-let currentView='week';
 
 function dateKey(dt){
   return`${dt.getFullYear()}-${String(dt.getMonth()+1).padStart(2,'0')}-${String(dt.getDate()).padStart(2,'0')}`;
@@ -390,6 +506,7 @@ function addTask(){
   const tasks=loadTasks();
   tasks.push({id:Date.now(),text,done:false,createdDate:today()});
   saveTasks(tasks);input.value='';renderTasks();
+  renderCalendar();
 }
 
 function toggleTask(id){
@@ -397,10 +514,12 @@ function toggleTask(id){
   const t=tasks.find(t=>t.id===id);
   if(t){t.done=!t.done;if(t.done)t.doneDate=today();}
   saveTasks(tasks);renderTasks();
+  renderCalendar();
 }
 
 function deleteTask(id){
   saveTasks(loadTasks().filter(t=>t.id!==id));renderTasks();
+  renderCalendar();
 }
 
 function renderTasks(){
@@ -434,40 +553,75 @@ function doSave(){
   if(document.getElementById('hist').style.display!=='none')renderHist();
 }
 
-function toggleHist(){
-  const el=document.getElementById('hist'),btn=document.getElementById('hbtn');
-  const show=el.style.display!=='none';
-  el.style.display=show?'none':'block';
-  btn.textContent=show?'🕐':'×';
-  if(!show)renderHist();
-}
+// カレンダー
+let calYear=new Date().getFullYear();
+let calMonth=new Date().getMonth();
 
-function setView(v,btn){
-  currentView=v;
-  document.querySelectorAll('.view-tab').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');renderHist();
-}
-
-function renderHist(){
+function renderCalendar(){
   const rec=loadRec();
-  let keys=Object.keys(rec).sort().reverse();
-  const now=new Date();
-  if(currentView==='week'){const c=new Date(now-7*86400000);keys=keys.filter(k=>new Date(k)>=c);}
-  else if(currentView==='month'){const c=new Date(now-30*86400000);keys=keys.filter(k=>new Date(k)>=c);}
-  const list=document.getElementById('hl');
-  if(!keys.length){list.innerHTML='<p class="empty-hist">この期間の記録はありません。</p>';return;}
-  list.innerHTML=keys.map(k=>{
-    const r=rec[k],[y,mo,d]=k.split('-'),dt=new Date(+y,+mo-1,+d);
-    const ds=`${y}年${+mo}月${+d}日（${WD[dt.getDay()]}）`;
-    const ms=r.sign?`${r.sign} ${r.deg}°・${r.phase}`:'';
-    const th=(r.tasks||[]).map(t=>`<div class="hist-task${t.done?' done-task':''}">${t.done?'✓':'○'} ${t.text}${t.carried?' 📌':''}</div>`).join('');
-    const mood='';
-    return`<div class="hist-item">
-      <p class="hist-date">${ds}</p>
-      ${ms?`<p class="hist-moon">${ms}</p>`:''}
-      ${th}${mood}
-    </div>`;
-  }).join('');
+  const title=document.getElementById('cal-title');
+  title.textContent=`${calYear}年${calMonth+1}月`;
+  const grid=document.getElementById('cal-grid');
+  grid.innerHTML='';
+  const dows=['日','月','火','水','木','金','土'];
+  dows.forEach(d=>{
+    const el=document.createElement('div');
+    el.className='cal-dow';
+    el.textContent=d;
+    grid.appendChild(el);
+  });
+  const first=new Date(calYear,calMonth,1).getDay();
+  const days=new Date(calYear,calMonth+1,0).getDate();
+  const todayStr=today();
+  for(let i=0;i<first;i++){
+    const el=document.createElement('div');
+    el.className='cal-day empty';
+    grid.appendChild(el);
+  }
+  for(let d=1;d<=days;d++){
+    const dk=`${calYear}-${String(calMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const el=document.createElement('div');
+    el.className='cal-day';
+    el.textContent=d;
+    if(dk===todayStr) el.classList.add('today');
+    if(rec[dk]) el.classList.add('has-record');
+    if(rec[dk]){
+      el.onclick=()=>showPastCard(dk);
+    }
+    grid.appendChild(el);
+  }
+}
+
+function calPrev(){
+  calMonth--;
+  if(calMonth<0){calMonth=11;calYear--;}
+  renderCalendar();
+}
+function calNext(){
+  calMonth++;
+  if(calMonth>11){calMonth=0;calYear++;}
+  renderCalendar();
+}
+
+function showPastCard(dk){
+  const rec=loadRec();
+  const r=rec[dk];
+  if(!r)return;
+  const [y,mo,d]=dk.split('-');
+  const dt=new Date(+y,+mo-1,+d);
+  document.getElementById('past-card-date').textContent=`${y}年${+mo}月${+d}日（${WD[dt.getDay()]}）`;
+  const moon=r.sign?`${r.sign}  ${r.deg}°  ${r.phase}`:'';
+  document.getElementById('past-card-moon').textContent=moon;
+  const tasks=(r.tasks||[]).map(t=>
+    `<div class="past-task${t.done?' done':''}">${t.done?'✓':'○'} ${t.text}</div>`
+  ).join('');
+  document.getElementById('past-card-tasks').innerHTML=tasks||'<p style="font-size:13px;color:rgba(130,90,10,0.5);">記録なし</p>';
+  document.getElementById('past-card').classList.add('show');
+  document.getElementById('past-card').scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+function closePastCard(){
+  document.getElementById('past-card').classList.remove('show');
 }
 
 function init(){
@@ -487,6 +641,7 @@ function init(){
   todayMoon={sign:sg.n,deg:deg+1,phase:phName};
   const rec=loadRec(),dk=today();
   renderTasks();
+  renderCalendar();
 }
 init();
 </script>
