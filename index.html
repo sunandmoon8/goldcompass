@@ -20,7 +20,7 @@ body{
 
 h1{
   text-align:center;
-  font-size:36px;
+  font-size:43.2px;
   font-weight:400;
   letter-spacing:.02em;
   color:#3a2200;
@@ -30,7 +30,7 @@ h1{
 }
 .dateline{
   text-align:center;
-  font-size:16px;
+  font-size:19.2px;
   font-weight:400;
   color:#3a2200;
   letter-spacing:.12em;
@@ -40,14 +40,15 @@ h1{
 }
 
 .card{
-  background:rgba(255,250,230,0.62);
+  background:rgba(255,255,250,0.88);
   border:1px solid rgba(200,160,40,0.3);
   border-radius:14px;
   padding:1.1rem;
   margin-bottom:.9rem;
+  width:100%;
 }
 .card-title{
-  font-size:11px;
+  font-size:13.2px;
   color:rgba(100,60,5,1.0);
   letter-spacing:.18em;
   margin-bottom:.75rem;
@@ -57,17 +58,17 @@ h1{
 .moon-row{text-align:center;}
 .moon-info{}
 .moon-sign-text{
-  font-size:22px;
+  font-size:26.4px;
   font-weight:400;
   font-family:Georgia,serif;
   color:#3a2200;
   line-height:1.2;
   text-align:center;
 }
-.moon-deg-text{font-size:11px;color:rgba(110,70,10,0.75);margin-top:2px;}
+.moon-deg-text{font-size:13.2px;color:rgba(110,70,10,0.75);margin-top:2px;}
 .moon-phase-badge{
   display:inline-block;
-  font-size:10px;
+  font-size:12.0px;
   background:rgba(200,150,20,0.15);
   border:1px solid rgba(180,130,10,0.35);
   border-radius:20px;
@@ -76,7 +77,7 @@ h1{
   margin-top:4px;
 }
 .moon-desc-text{
-  font-size:13px;
+  font-size:15.6px;
   color:rgba(60,34,0,0.85);
   line-height:1.75;
   margin-top:.6rem;
@@ -86,7 +87,7 @@ h1{
 }
 .danger-badge{
   display:inline-flex;align-items:center;gap:4px;
-  font-size:11px;
+  font-size:13.2px;
   background:rgba(200,50,50,0.12);
   border:1px solid rgba(200,80,80,0.35);
   border-radius:6px;
@@ -100,10 +101,10 @@ h1{
 .task-input{
   flex:1;
   padding:9px 11px;
-  background:rgba(255,250,220,0.6);
+  background:rgba(255,255,250,0.85);
   border:1px solid rgba(180,140,30,0.3);
   border-radius:9px;
-  font-size:14px;
+  font-size:16.8px;
   color:#3a2200;
   font-family:inherit;
   outline:none;
@@ -117,7 +118,7 @@ h1{
   border:1px solid rgba(200,150,20,0.4);
   border-radius:9px;
   color:#5a3a00;
-  font-size:18px;
+  font-size:21.6px;
   cursor:pointer;
   flex-shrink:0;
   -webkit-tap-highlight-color:transparent;
@@ -141,7 +142,7 @@ h1{
   cursor:pointer;
   flex-shrink:0;
   display:flex;align-items:center;justify-content:center;
-  font-size:13px;
+  font-size:15.6px;
   color:#5a3a00;
   -webkit-tap-highlight-color:transparent;
 }
@@ -151,33 +152,44 @@ h1{
 }
 .task-text{
   flex:1;
-  font-size:14px;
+  font-size:16.8px;
   color:#3a2200;
   line-height:1.4;
 }
 .task-item.done .task-text{text-decoration:line-through;color:rgba(60,34,0,0.4);}
 .carried-label{
-  font-size:10px;
+  font-size:12.0px;
   color:rgba(160,90,10,0.8);
   display:block;
   margin-top:2px;
+}
+.task-edit-input{
+  flex:1;
+  padding:4px 8px;
+  background:rgba(255,255,250,0.9);
+  border:1px solid rgba(180,140,30,0.5);
+  border-radius:6px;
+  font-size:16.8px;
+  color:#3a2200;
+  font-family:inherit;
+  outline:none;
 }
 .task-del{
   background:transparent;
   border:none;
   color:rgba(160,100,20,0.45);
-  font-size:16px;
+  font-size:19.2px;
   cursor:pointer;
   padding:2px 4px;
   -webkit-tap-highlight-color:transparent;
 }
 .task-del:active{color:rgba(180,60,40,0.8);}
-.no-tasks{font-size:13px;color:rgba(130,90,10,0.5);text-align:center;padding:.5rem 0;}
+.no-tasks{font-size:15.6px;color:rgba(130,90,10,0.5);text-align:center;padding:.5rem 0;}
 
 /* 今日の気分 */
 .field{margin-bottom:0;}
 .field label{
-  font-size:10px;
+  font-size:12.0px;
   color:rgba(130,90,10,0.7);
   display:block;
   margin-bottom:4px;
@@ -186,10 +198,10 @@ h1{
 .field input{
   width:100%;
   padding:9px 11px;
-  background:rgba(255,250,220,0.6);
+  background:rgba(255,255,250,0.85);
   border:1px solid rgba(180,140,30,0.25);
   border-radius:9px;
-  font-size:14px;
+  font-size:16.8px;
   color:#3a2200;
   font-family:inherit;
   outline:none;
@@ -206,7 +218,7 @@ h1{
   border:1px solid rgba(200,150,20,0.45);
   border-radius:11px;
   color:#5a3a00;
-  font-size:15px;
+  font-size:18.0px;
   font-family:inherit;
   letter-spacing:.08em;
   cursor:pointer;
@@ -220,14 +232,14 @@ h1{
   background:transparent;
   border:none;
   color:rgba(100,65,10,0.75);
-  font-size:13px;
+  font-size:15.6px;
   font-family:inherit;
   cursor:pointer;
   margin-bottom:.5rem;
   -webkit-tap-highlight-color:transparent;
 }
-.savedmsg{text-align:center;font-size:13px;min-height:18px;color:rgba(60,120,20,0.9);margin-bottom:.4rem;}
-.note{text-align:center;font-size:10px;color:rgba(120,85,10,0.45);margin-bottom:1rem;}
+.savedmsg{text-align:center;font-size:15.6px;min-height:18px;color:rgba(60,120,20,0.9);margin-bottom:.4rem;}
+.note{text-align:center;font-size:12.0px;color:rgba(120,85,10,0.45);margin-bottom:1rem;}
 
 /* 過去の記録 */
 .view-tabs{display:flex;gap:6px;margin-bottom:.75rem;}
@@ -237,7 +249,7 @@ h1{
   border:1px solid rgba(180,140,30,0.25);
   border-radius:8px;
   color:rgba(110,70,10,0.65);
-  font-size:12px;
+  font-size:14.4px;
   cursor:pointer;
   text-align:center;
   font-family:inherit;
@@ -249,33 +261,38 @@ h1{
   color:#5a3a00;
 }
 .hist-item{
-  background:rgba(255,250,225,0.6);
+  background:rgba(255,255,250,0.85);
   border:1px solid rgba(180,140,30,0.2);
   border-radius:10px;
   padding:.8rem 1rem;
   margin-bottom:7px;
 }
-.hist-date{font-size:11px;color:rgba(120,80,10,0.7);margin-bottom:4px;}
-.hist-moon{font-size:11px;color:rgba(110,70,10,0.65);margin-bottom:5px;}
-.hist-task{font-size:12px;color:rgba(60,34,0,0.8);line-height:1.6;}
+.hist-date{font-size:13.2px;color:rgba(120,80,10,0.7);margin-bottom:4px;}
+.hist-moon{font-size:13.2px;color:rgba(110,70,10,0.65);margin-bottom:5px;}
+.hist-task{font-size:14.4px;color:rgba(60,34,0,0.8);line-height:1.6;}
 .hist-task.done-task{color:rgba(100,70,10,0.5);text-decoration:line-through;}
-.hist-mood{font-size:12px;color:rgba(80,50,10,0.7);margin-top:4px;}
-.empty-hist{text-align:center;font-size:13px;color:rgba(130,90,10,0.45);padding:1.5rem 0;}
+.hist-mood{font-size:14.4px;color:rgba(80,50,10,0.7);margin-top:4px;}
+.empty-hist{text-align:center;font-size:15.6px;color:rgba(130,90,10,0.45);padding:1.5rem 0;}
 #moon-svg{display:block;}
 /* カレンダー */
 .calendar{
-  background:rgba(255,250,225,0.62);
+  background:rgba(255,255,250,0.88);
   border:1px solid rgba(200,160,40,0.3);
   border-radius:14px;
   padding:1.1rem;
+  margin-top:1.8rem;
   margin-bottom:.9rem;
+  max-width:420px;
+  width:100%;
+  margin-left:auto;
+  margin-right:auto;
 }
 .cal-header{
   display:flex;align-items:center;justify-content:space-between;
   margin-bottom:.75rem;
 }
 .cal-title{
-  font-size:14px;
+  font-size:16.8px;
   color:#3a2200;
   font-family:Georgia,'Hiragino Mincho ProN','Yu Mincho',serif;
   letter-spacing:.08em;
@@ -284,7 +301,7 @@ h1{
   background:transparent;
   border:none;
   color:rgba(100,65,10,0.7);
-  font-size:18px;
+  font-size:21.6px;
   cursor:pointer;
   padding:2px 8px;
   -webkit-tap-highlight-color:transparent;
@@ -296,13 +313,13 @@ h1{
 }
 .cal-dow{
   text-align:center;
-  font-size:10px;
+  font-size:12.0px;
   color:rgba(130,90,10,0.6);
   padding:2px 0;
 }
 .cal-day{
   text-align:center;
-  font-size:13px;
+  font-size:15.6px;
   color:rgba(60,34,0,0.75);
   padding:6px 2px;
   border-radius:50%;
@@ -330,7 +347,7 @@ h1{
 
 /* 過去カード（ポップアップ風） */
 .past-card{
-  background:rgba(255,250,225,0.88);
+  background:rgba(255,255,252,0.95);
   border:1px solid rgba(200,160,40,0.4);
   border-radius:14px;
   padding:1.1rem;
@@ -339,13 +356,13 @@ h1{
 }
 .past-card.show{display:block;}
 .past-card-date{
-  font-size:12px;
+  font-size:14.4px;
   color:rgba(130,90,10,0.7);
   margin-bottom:.5rem;
   font-family:Georgia,'Hiragino Mincho ProN',serif;
 }
 .past-card-moon{
-  font-size:13px;
+  font-size:15.6px;
   color:rgba(100,65,10,0.8);
   margin-bottom:.6rem;
   text-align:center;
@@ -355,12 +372,12 @@ h1{
   background:transparent;
   border:none;
   color:rgba(130,90,10,0.5);
-  font-size:18px;
+  font-size:21.6px;
   cursor:pointer;
   margin-top:-4px;
 }
 .past-task{
-  font-size:13px;
+  font-size:15.6px;
   color:rgba(60,34,0,0.8);
   line-height:1.7;
 }
@@ -400,9 +417,9 @@ h1{
     <div id="danger-area"></div>
   </div>
 
-    <p class="card-title" style="margin-top:1rem;font-size:17px;font-weight:300;letter-spacing:.02em;font-family:'Hiragino Kaku Gothic ProN','Hiragino Sans',sans-serif;">今日のミッション</p>
+    <p class="card-title" style="margin-top:1rem;font-size:20.4px;font-weight:300;letter-spacing:.02em;font-family:'Hiragino Kaku Gothic ProN','Hiragino Sans',sans-serif;">今日のミッション</p>
     <div class="task-input-row">
-      <input type="text" class="task-input" id="task-input" placeholder="" onkeydown="if(event.key==='Enter')addTask()"/>
+      <input type="text" class="task-input" id="task-input" placeholder="" onkeydown="if(event.key==='Enter'&&!event.isComposing)addTask()"/>
       <button class="add-btn" onclick="addTask()">＋</button>
     </div>
     <div class="task-list" id="task-list"></div>
@@ -450,7 +467,33 @@ const SG=[
   {n:'水瓶座',e:'Aquarius',d:'独創的なアイデアが出やすい日。自分だけの視点を大切に。'},
   {n:'魚座',e:'Pisces',d:'感受性が敏感になる日。無理せずゆったりと過ごして。'},
 ];
-const PH=['新月','三日月','上弦','十三夜','満月','十六夜','下弦','有明月'];
+// 国立天文台データ: 2026年3月19日10:23 新月を基準
+const NAOJ_NEW_MOON = new Date('2026-03-19T10:23:00Z').getTime();
+const SYN = 29.53059; // 朔望月（日）
+
+function getMoonAge(dt){
+  const elapsed=(dt.getTime()-NAOJ_NEW_MOON)/86400000;
+  const age=((elapsed%SYN)+SYN)%SYN;
+  return age;
+}
+
+function getPhaseName(age){
+  if(age < 1.0)  return '新月';
+  if(age < 3.5)  return '三日月';
+  if(age < 6.5)  return '上弦前';
+  if(age < 8.5)  return '上弦';
+  if(age < 11.5) return '十日夜';
+  if(age < 13.5) return '十三夜';
+  if(age < 16.0) return '満月';
+  if(age < 18.5) return '十六夜';
+  if(age < 21.5) return '下弦前';
+  if(age < 23.5) return '下弦';
+  if(age < 26.5) return '有明月';
+  if(age < 29.0) return '晦月';
+  return '新月';
+}
+
+const PH=['新月','三日月','上弦前','上弦','十日夜','十三夜','満月','十六夜','下弦前','下弦','有明月','晦月'];
 const DANGER=['新月','満月'];
 let todayMoon={};
 
@@ -505,7 +548,11 @@ function addTask(){
   if(!text)return;
   const tasks=loadTasks();
   tasks.push({id:Date.now(),text,done:false,createdDate:today()});
-  saveTasks(tasks);input.value='';renderTasks();
+  saveTasks(tasks);
+  input.value='';
+  input.blur();
+  renderTasks();
+  doSave();
   renderCalendar();
 }
 
@@ -529,11 +576,12 @@ function renderTasks(){
   if(!tasks.length){list.innerHTML='';return;}
   list.innerHTML=tasks.map(t=>{
     const carried=t.createdDate!==td&&!t.done;
-    return`<div class="task-item${t.done?' done':''}${carried?' carried':''}">
-      <button class="task-check${t.done?' checked':''}" onclick="toggleTask(${t.id})">${t.done?'✓':''}</button>
-      <div class="task-text">${t.text}${carried?`<span class="carried-label">📌 持ち越し（${t.createdDate}）</span>`:''}</div>
-      <button class="task-del" onclick="deleteTask(${t.id})">×</button>
-    </div>`;
+    const carried_label=carried?'<span class="carried-label">📌 持ち越し（'+t.createdDate+'）</span>':'';
+    return'<div class="task-item'+(t.done?' done':'')+(carried?' carried':'')+'">'
+      +'<button class="task-check'+(t.done?' checked':'')+'" onclick="toggleTask('+t.id+')">'+(t.done?'✓':'')+'</button>'
+      +'<div class="task-text">'+t.text+carried_label+'</div>'
+      +'<button class="task-del" onclick="deleteTask('+t.id+')">×</button>'
+      +'</div>';
   }).join('');
 }
 
@@ -547,10 +595,7 @@ function doSave(){
     ...todayMoon
   };
   localStorage.setItem(KEY,JSON.stringify(rec));
-  const msg=document.getElementById('sm');
-  msg.textContent='記録しました。今日もていねいに。';
-  setTimeout(()=>{msg.textContent='';},3000);
-  if(document.getElementById('hist').style.display!=='none')renderHist();
+  renderCalendar();
 }
 
 // カレンダー
@@ -615,7 +660,7 @@ function showPastCard(dk){
   const tasks=(r.tasks||[]).map(t=>
     `<div class="past-task${t.done?' done':''}">${t.done?'✓':'○'} ${t.text}</div>`
   ).join('');
-  document.getElementById('past-card-tasks').innerHTML=tasks||'<p style="font-size:13px;color:rgba(130,90,10,0.5);">記録なし</p>';
+  document.getElementById('past-card-tasks').innerHTML=tasks||'<p style="font-size:15.6px;color:rgba(130,90,10,0.5);">記録なし</p>';
   document.getElementById('past-card').classList.add('show');
   document.getElementById('past-card').scrollIntoView({behavior:'smooth',block:'nearest'});
 }
@@ -629,7 +674,8 @@ function init(){
   document.getElementById('dl').textContent=`${now.getFullYear()}年${now.getMonth()+1}月${now.getDate()}日（${WD[now.getDay()]}）`;
   const{lon,phase}=calcMoon(now);
   const si=Math.floor(lon/30),deg=Math.floor(lon%30),sg=SG[si];
-  const phName=PH[Math.round(phase*8)%8];
+  const moonAge=getMoonAge(now);
+  const phName=getPhaseName(moonAge);
   document.getElementById('mn').textContent=sg.n;
   document.getElementById('md').textContent=`${sg.e}  ${deg+1}°`;
   document.getElementById('mpn').textContent=phName;
