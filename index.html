@@ -134,6 +134,59 @@ h1{
 }
 .task-item.done{opacity:0.5;}
 .task-item.carried{border-color:rgba(200,120,20,0.35);}
+.carried-section{
+  margin-bottom:.75rem;
+}
+.carried-section-title{
+  font-size:12px;
+  color:rgba(160,90,10,0.7);
+  letter-spacing:.08em;
+  margin-bottom:.5rem;
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+.carried-section-title::before{
+  content:'';
+  display:inline-block;
+  width:8px;height:8px;
+  border-radius:50%;
+  background:rgba(200,120,20,0.6);
+}
+.carried-item{
+  display:flex;align-items:center;gap:10px;
+  background:rgba(255,240,200,0.45);
+  border:1px solid rgba(200,130,20,0.3);
+  border-radius:9px;
+  padding:9px 10px;
+  margin-bottom:5px;
+}
+.carried-item-text{
+  flex:1;
+  font-size:15.6px;
+  color:rgba(100,60,5,0.85);
+}
+.carried-item-date{
+  font-size:11px;
+  color:rgba(160,100,20,0.6);
+  margin-left:4px;
+}
+.carried-check{
+  width:22px;height:22px;
+  border-radius:50%;
+  border:1.5px solid rgba(180,120,10,0.5);
+  background:transparent;
+  cursor:pointer;
+  flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;
+  color:#5a3a00;
+  -webkit-tap-highlight-color:transparent;
+}
+.carried-check.checked{
+  background:rgba(200,150,20,0.3);
+  border-color:rgba(160,110,10,0.7);
+}
 .task-check{
   width:22px;height:22px;
   border-radius:50%;
@@ -352,6 +405,11 @@ h1{
   border-radius:14px;
   padding:1.1rem;
   margin-bottom:.9rem;
+  margin-top:1.8rem;
+  max-width:420px;
+  width:100%;
+  margin-left:auto;
+  margin-right:auto;
   display:none;
 }
 .past-card.show{display:block;}
@@ -422,6 +480,7 @@ h1{
       <input type="text" class="task-input" id="task-input" placeholder="" onkeydown="if(event.key==='Enter'&&!event.isComposing)addTask()"/>
       <button class="add-btn" onclick="addTask()">＋</button>
     </div>
+    <div id="carried-section"></div>
     <div class="task-list" id="task-list"></div>
   </div>
 
@@ -572,14 +631,34 @@ function deleteTask(id){
 function renderTasks(){
   const tasks=loadTasks();
   const list=document.getElementById('task-list');
+  const carried_sec=document.getElementById('carried-section');
   const td=today();
-  if(!tasks.length){list.innerHTML='';return;}
-  list.innerHTML=tasks.map(t=>{
-    const carried=t.createdDate!==td&&!t.done;
-    const carried_label=carried?'<span class="carried-label">📌 持ち越し（'+t.createdDate+'）</span>':'';
-    return'<div class="task-item'+(t.done?' done':'')+(carried?' carried':'')+'">'
+
+  // 今日のタスクとやり残しを分ける
+  const todayTasks=tasks.filter(t=>t.createdDate===td);
+  const carriedTasks=tasks.filter(t=>t.createdDate!==td&&!t.done);
+
+  // やり残しセクション
+  if(carriedTasks.length){
+    carried_sec.innerHTML='<div class="carried-section">'
+      +'<p class="carried-section-title">やり残し（'+carriedTasks.length+'件）</p>'
+      +carriedTasks.map(t=>'<div class="carried-item">'
+        +'<button class="carried-check'+(t.done?' checked':'')+'" onclick="toggleTask('+t.id+')">'+(t.done?'✓':'')+'</button>'
+        +'<div class="carried-item-text">'+t.text+'<span class="carried-item-date">'+t.createdDate+'</span></div>'
+        +'<button class="task-del" onclick="deleteTask('+t.id+')">×</button>'
+        +'</div>'
+      ).join('')
+      +'</div>';
+  } else {
+    carried_sec.innerHTML='';
+  }
+
+  // 今日のタスク
+  if(!todayTasks.length){list.innerHTML='';return;}
+  list.innerHTML=todayTasks.map(t=>{
+    return'<div class="task-item'+(t.done?' done':'')+'">'
       +'<button class="task-check'+(t.done?' checked':'')+'" onclick="toggleTask('+t.id+')">'+(t.done?'✓':'')+'</button>'
-      +'<div class="task-text">'+t.text+carried_label+'</div>'
+      +'<div class="task-text">'+t.text+'</div>'
       +'<button class="task-del" onclick="deleteTask('+t.id+')">×</button>'
       +'</div>';
   }).join('');
@@ -652,15 +731,21 @@ function showPastCard(dk){
   const rec=loadRec();
   const r=rec[dk];
   if(!r)return;
-  const [y,mo,d]=dk.split('-');
+  const parts=dk.split('-');
+  const y=parts[0],mo=parts[1],d=parts[2];
   const dt=new Date(+y,+mo-1,+d);
-  document.getElementById('past-card-date').textContent=`${y}年${+mo}月${+d}日（${WD[dt.getDay()]}）`;
-  const moon=r.sign?`${r.sign}  ${r.deg}°  ${r.phase}`:'';
+  document.getElementById('past-card-date').textContent=y+'年'+(+mo)+'月'+(+d)+'日（'+WD[dt.getDay()]+'）';
+  const moon=r.sign?r.sign+'  '+r.deg+'°  '+r.phase:'';
   document.getElementById('past-card-moon').textContent=moon;
-  const tasks=(r.tasks||[]).map(t=>
-    `<div class="past-task${t.done?' done':''}">${t.done?'✓':'○'} ${t.text}</div>`
-  ).join('');
-  document.getElementById('past-card-tasks').innerHTML=tasks||'<p style="font-size:15.6px;color:rgba(130,90,10,0.5);">記録なし</p>';
+  const allTasks=r.tasks||[];
+  const undoneTasks=allTasks.filter(function(t){return !t.done;});
+  if(undoneTasks.length){
+    document.getElementById('past-card-tasks').innerHTML=
+      undoneTasks.map(function(t){return '<div class="past-task">○ '+t.text+'</div>';}).join('');
+  } else {
+    document.getElementById('past-card-tasks').innerHTML=
+      '<p style="font-size:15.6px;color:rgba(100,130,60,0.8);">やり残しなし ✓</p>';
+  }
   document.getElementById('past-card').classList.add('show');
   document.getElementById('past-card').scrollIntoView({behavior:'smooth',block:'nearest'});
 }
