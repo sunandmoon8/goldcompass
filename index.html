@@ -23,14 +23,16 @@ h1{text-align:center;font-size:43px;font-weight:400;letter-spacing:.02em;color:#
 .moon-sign{font-size:24px;font-weight:400;font-family:Georgia,serif;color:#3a2200;line-height:1.2;margin-top:4px;}
 .moon-deg{font-size:11px;color:rgba(110,70,10,0.65);margin-top:2px;}
 .moon-phase-badge{display:inline-block;font-size:11px;background:rgba(200,150,20,0.15);border:1px solid rgba(180,130,10,0.3);border-radius:14px;padding:1px 8px;color:rgba(110,70,10,0.8);margin-top:3px;}
-.moon-desc{font-size:13px;color:rgba(60,34,0,0.75);line-height:1.8;font-weight:300;font-family:Georgia,'Hiragino Mincho ProN',serif;text-align:center;margin-top:6px;}
-.danger-badge{display:inline-flex;align-items:center;gap:4px;font-size:12px;background:rgba(200,50,50,0.12);border:1px solid rgba(200,80,80,0.35);border-radius:6px;padding:2px 7px;color:rgba(160,40,40,0.9);margin-top:4px;}
-#danger-area{text-align:center;}
 .sub-lines{margin-top:10px;padding-top:10px;border-top:1px solid rgba(180,150,80,0.15);text-align:center;}
 .sub-line{font-size:12px;color:rgba(90,70,40,0.65);line-height:1.6;margin-bottom:3px;letter-spacing:.5px;}
 .sub-line:last-child{margin-bottom:0;}
-.n-tag{display:inline-block;font-size:12px;color:#5A5040;margin:0 4px;font-weight:500;letter-spacing:.5px;}
-.sub-insp{font-size:13px;color:rgba(60,34,0,0.7);font-family:Georgia,'Hiragino Mincho ProN',serif;font-weight:300;margin-top:6px;line-height:1.8;}
+
+/* ── リラの奇跡 ── */
+.polaris{text-align:center;cursor:pointer;-webkit-tap-highlight-color:transparent;}
+.polaris-label{font-size:12px;letter-spacing:4px;color:rgba(160,130,60,0.6);margin-bottom:8px;}
+.polaris-text{font-size:15px;color:rgba(80,55,15,0.65);line-height:1.9;font-weight:300;font-family:Georgia,'Hiragino Mincho ProN',serif;white-space:pre-line;}
+.polaris-text:empty::after{content:'タップして書く';color:rgba(160,130,60,0.35);font-size:12px;}
+.polaris-edit{width:100%;padding:8px 10px;background:rgba(255,255,250,0.9);border:1px solid rgba(180,140,30,0.4);border-radius:8px;font-size:15px;color:#3a2200;font-family:Georgia,'Hiragino Mincho ProN',serif;line-height:1.9;outline:none;resize:none;text-align:center;}
 
 /* ── タスク ── */
 .task-cols{display:flex;gap:10px;align-items:flex-start;}
@@ -92,13 +94,15 @@ h1{text-align:center;font-size:43px;font-weight:400;letter-spacing:.02em;color:#
       <div class="moon-deg" id="md"></div>
       <span class="moon-phase-badge" id="mpn"></span>
     </div>
-    <p class="moon-desc" id="mt"></p>
-    <div id="danger-area"></div>
     <div class="sub-lines">
       <p class="sub-line" id="sekki-line"></p>
-      <p class="sub-line" id="nature-line"></p>
-      <p class="sub-line sub-insp" id="insp-text"></p>
     </div>
+  </div>
+
+  <!-- リラの奇跡 -->
+  <div class="card polaris" id="polaris" onclick="editPolaris()">
+    <div class="polaris-label">✦ リラのキセキ</div>
+    <div class="polaris-text" id="polaris-text"></div>
   </div>
 
   <!-- タスク -->
@@ -278,40 +282,6 @@ const SEKKI_DATA = [
   ]}
 ];
 
-const INSPIRATIONS = [
-  "今日はただ、呼吸しているだけで十分です",
-  "あなたがここにいること、それだけで世界は少し明るい",
-  "小さな「好き」を大切にする日",
-  "何もしない時間こそ、魂の栄養",
-  "今日の風は、あなたに何を運んできたでしょう",
-  "ひとつだけ、自分に優しいことをしてみて",
-  "心が動いた瞬間を、そっと覚えておいて",
-  "答えを急がなくていい。問いを持っているだけで素晴らしい",
-  "あなたの「なんとなく」は、宇宙のサインかもしれない",
-  "今日出会う色の中に、メッセージが隠れています",
-  "手のひらを太陽に向けてみて。それだけで何かが変わる",
-  "迷う時間も、大切な旅の一部",
-  "今のあなたに必要なものは、もう手の中にある",
-  "深呼吸ひとつで、景色が変わることがある",
-  "昨日の自分より、ほんの少しだけ正直に",
-  "あなたの直感は、何千年の記憶でできている",
-  "完璧じゃなくていい。あなたらしければいい",
-  "今日という日は、二度と来ない奇跡の一日",
-  "誰かの言葉より、自分のからだの声を聴いて",
-  "ゆっくりでいい。花だって、一日では咲かない",
-  "今日のあなたの笑顔が、誰かの花になる",
-  "自分を許すことは、世界を許すこと",
-  "心の扉は、内側からしか開かない",
-  "あなたの存在そのものが、誰かへの贈り物",
-  "今日は、自分のためだけの時間を少しだけ作って",
-  "見えないものを感じられるあなたは、とても豊か",
-  "足りないものではなく、あるものを数えてみて",
-  "あなたの物語は、まだまだ続いていく",
-  "雨の日には雨の日の美しさがある",
-  "急がなくていい。あなたのペースが、あなたの正解",
-  "夕焼けを見る余裕があるなら、今日は大丈夫"
-];
-
 function getCurrentSekkiAndKou(date){
   const m=date.getMonth()+1,d=date.getDate();const dn=m*100+d;
   let sekki=SEKKI_DATA[SEKKI_DATA.length-1];
@@ -328,7 +298,6 @@ function getPhaseName(age){
   if(age<16.0)return'満月';if(age<18.5)return'十六夜';if(age<20.5)return'下弦前';
   if(age<23.5)return'下弦';if(age<26.5)return'有明月';if(age<29.0)return'晦月';return'新月';
 }
-const DANGER=['新月','満月'];
 let todayMoon={};
 
 function dateKey(dt){return`${dt.getFullYear()}-${String(dt.getMonth()+1).padStart(2,'0')}-${String(dt.getDate()).padStart(2,'0')}`;}
@@ -454,6 +423,30 @@ document.addEventListener('click',function(e){
   }
 });
 
+const KEY_POLARIS='compass_polaris';
+function loadPolaris(){
+  const text=localStorage.getItem(KEY_POLARIS)||'';
+  document.getElementById('polaris-text').textContent=text;
+}
+function editPolaris(){
+  const el=document.getElementById('polaris');
+  const textEl=el.querySelector('.polaris-text');
+  if(!textEl)return;
+  const current=localStorage.getItem(KEY_POLARIS)||'';
+  const ta=document.createElement('textarea');
+  ta.className='polaris-edit';ta.value=current;ta.rows=3;ta.placeholder='あなたの目指す先を書く…';
+  textEl.replaceWith(ta);
+  ta.focus();
+  const save=()=>{
+    const nv=ta.value.trim();
+    localStorage.setItem(KEY_POLARIS,nv);
+    const div=document.createElement('div');
+    div.className='polaris-text';div.id='polaris-text';div.textContent=nv;
+    ta.replaceWith(div);
+  };
+  ta.addEventListener('blur',save);
+}
+
 function init(){
   const now=new Date();
   cleanupDoneTasks();
@@ -467,17 +460,12 @@ function init(){
   document.getElementById('mn').textContent=sg.n;
   document.getElementById('md').textContent=`${sg.e}  ${deg+1}°`;
   document.getElementById('mpn').textContent=phName;
-  document.getElementById('mt').textContent=sg.d;
   drawMoon(phase);
-  if(DANGER.includes(phName)){document.getElementById('danger-area').innerHTML=`<div class="danger-badge">⚠ ${phName}前後 — 交通・感情に注意して</div>`;}
   todayMoon={sign:sg.n,deg:deg+1,phase:phName};
 
   document.getElementById('sekki-line').textContent=`${sekki.name} ─ ${kou.name}`;
-  document.getElementById('nature-line').innerHTML=`<span class="n-tag">🌸 ${kou.flower}</span><span class="n-tag">🐦 ${kou.bird}</span><span class="n-tag">🍃 ${kou.wind}</span>`;
 
-  const doy=Math.floor((now-new Date(now.getFullYear(),0,0))/86400000);
-  document.getElementById('insp-text').textContent='「'+INSPIRATIONS[doy%INSPIRATIONS.length]+'」';
-
+  loadPolaris();
   renderTasks();renderCalendar();
 }
 init();
